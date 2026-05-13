@@ -16,10 +16,8 @@ services:
     build:
       context: ./client
     container_name: client
-    ports:
-      - "4173:4173"
-    depends_on:
-      - server
+    volumes:
+      - /root/pipeline/client/dist:/app/dist
     networks:
       - app-network
 
