@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./server
+    container_name: server
+    env_file:
+      - ./server/.env
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+  client:
+    build:
+      context: ./client
+    container_name: client
+    ports:
+      - "4173:4173"
+    depends_on:
+      - server
+    networks:
+      - app-network
+
+networks:
+  app-network:
