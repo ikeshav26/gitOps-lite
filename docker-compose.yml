@@ -12,14 +12,5 @@ services:
     networks:
       - app-network
 
-  client:
-    build:
-      context: ./client
-    container_name: client
-    volumes:
-      - /root/pipeline/client/dist:/app/dist
-    networks:
-      - app-network
-
 networks:
   app-network:

@@ -34,6 +34,7 @@ const App = () => {
   return (
     <div style={{ padding: "20px", fontFamily: "system-ui" }}>
       <h1>Welcome to the App!</h1>
+      <img src="favicon.svg" alt="Logo"/>
       <button 
         onClick={fetchData} 
         disabled={loading}
