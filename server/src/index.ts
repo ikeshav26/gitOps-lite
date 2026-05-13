@@ -15,7 +15,7 @@ const port = process.env.PORT || 4000 ;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.send("testing api is working...");
   console.log("Response sent");
 });
