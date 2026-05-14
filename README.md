@@ -1,159 +1,62 @@
-# GitOps Architecture
+# Production Deployment Pipeline
 
-A modern CI/CD pipeline implementation demonstrating automated deployment of a full-stack application using GitHub Actions, Docker, and manual workflow triggers.
+This project is a CI/CD pipeline that automates versioning, releasing, and deploying a full-stack application to a DigitalOcean droplet using GitHub Actions, Docker, and Nginx.
 
-## Architecture Overview
-
-This project implements a **3-tier containerized architecture** with:
-
-- **Frontend Layer**: React/Vite static application served by Nginx
-- **Application Layer**: Node.js/TypeScript backend API
-- **Infrastructure Layer**: Docker Compose orchestration with SSL support (Certbot)
-
-## Project Structure
-
-```
-.
-├── client/                 # React/Vite frontend
-│   ├── src/
-│   ├── public/
-│   ├── vite.config.ts
-│   └── package.json
-├── server/                 # Node.js/TypeScript backend
-│   ├── src/
-│   ├── Dockerfile
-│   ├── tsconfig.json
-│   └── package.json
-├── nginx/                  # Reverse proxy configuration
-│   └── nginx.conf
-├── .github/workflows/      # GitHub Actions CI/CD
-│   └── deploy.yml
-│   └── version.yml
-├── docker-compose.yml      # Container orchestration
-├── deploy.sh              # Deployment script
-└── package.json           # Root workspace config
-```
+---
 
 ## Tech Stack
+- GitHub Actions (CI/CD)
+- Docker & Docker Compose
+- Node.js (Backend)
+- Vite (Frontend)
+- Nginx (Reverse Proxy)
+- DigitalOcean Droplet
+- Bash scripting
 
-- **Frontend**: React, TypeScript, Vite
-- **Backend**: Node.js, Express (implied), TypeScript
-- **Containerization**: Docker, Docker Compose
-- **CI/CD**: GitHub Actions
-- **Reverse Proxy**: Nginx
-- **SSL/TLS**: Certbot
+---
 
-## Deployment Workflow
+## Workflow Overview
 
-The deployment follows a **manual trigger CI/CD pipeline**:
+The project has two main workflows:
 
-1. Developer pushes code to `main` branch
-2. Manually trigger GitHub Actions workflow via `workflow_dispatch`
-3. GitHub Actions runs version bump and release jobs
-4. Workflow triggers `deploy.yml` on successful release
-5. Server pulls latest changes and redeploys containers
+### 1. Version Workflow (`version.yml`)
+Triggered manually.
 
-## Setup Instructions
+- Reads current version from Git
+- Updates version (Git tag like `v1.0.0`)
+- Commits version bump
+- Creates GitHub Release
+- Triggers deployment workflow
 
-### Prerequisites
+---
 
-- Node.js 18+ with pnpm
-- Docker and Docker Compose
-- Git
-- GitHub repository with Actions enabled
+### 2. Deployment Workflow (`deploy.yml`)
+Runs after release trigger.
 
-### Local Development
+- Connects to DigitalOcean server via SSH
+- Pulls latest code from GitHub
+- Builds frontend assets
+- Rebuilds Docker containers
+- Copies frontend build to Nginx directory
+- Reloads Nginx
+- Performs health check
 
-```bash
-# Install dependencies
-pnpm install
+---
 
-# Frontend
-cd client && pnpm build
+## Deployment Flow
 
-# Backend
-cd server && pnpm build
+GitHub commit → Manual version trigger → Git tag created → GitHub release → Deploy workflow → Server update → Application live
 
-# Start containers
-docker-compose up -d
-```
+---
 
-### Server Deployment
+## Server Setup
 
-The deployment script handles:
-- Pulling latest changes from main branch
-- Building frontend assets
-- Copying static files to Nginx directory
-- Rebuilding Docker containers
-- Reloading Nginx configuration
-- Health checks
+- Frontend served via Nginx
+- Backend runs in Docker containers
+- Deployment is fully automated via SSH script
 
-```bash
-# Run deployment (on server)
-./deploy.sh
-```
+---
 
-## GitHub Actions Workflows
+## Purpose
 
-### version.yml
-- Bumps version in package.json
-- Creates Git tags
-- Generates GitHub releases
-- Triggers deploy workflow
-
-**Trigger**: Manual via `workflow_dispatch`
-
-### deploy.yml
-- Automatically triggered after successful version bump
-- Pulls latest changes on server
-- Rebuilds and deploys containers
-
-## Important Notes
-
-### Nginx Configuration Conflicts
-
-The `nginx.conf` file is modified by Certbot during SSL certificate renewal. To avoid conflicts during pulls:
-
-```bash
-# Use direct pull without rebase
-git pull origin main
-```
-
-If needed, exclude nginx.conf from tracking:
-```bash
-git update-index --assume-unchanged nginx/nginx.conf
-```
-
-### Manual vs Automatic Deployment
-
-This implementation uses **manual workflow triggers** instead of auto-deployment on every commit because:
-
-- Prevents unintended deployments from minor commits
-- Reduces resource usage and server restarts
-- Avoids unnecessary downtime
-- Provides control over production release timing
-
-## Health Checks
-
-The deployment script includes an API health check:
-
-```bash
-curl -f http://localhost:3000/api
-```
-
-## Monitoring
-
-```bash
-# Check running containers
-docker ps
-
-# View Nginx status
-systemctl status nginx
-
-# Check backend health
-curl http://localhost:3000/api
-```
-
-## License
-
-MIT
+This project demonstrates a production-like CI/CD system with automated releases, version control, and server deployment.
