@@ -12,7 +12,7 @@ cd $PROJECT_DIR
 
 echo ""
 echo "📥 Pulling latest changes..."
-git pull --rebase origin main
+git pull origin main
 
 echo ""
 echo "📦 Current version:"
