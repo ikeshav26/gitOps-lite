@@ -34,11 +34,9 @@ sudo cp -r dist/* /var/www/pipeline/
 echo ""
 echo "🐳 Rebuilding Docker containers..."
 cd $PROJECT_DIR
+docker-compose down
+docker system prune -f
 docker-compose up -d --build
-
-echo ""
-echo "🧹 Cleaning unused Docker images..."
-docker image prune -f
 
 echo ""
 echo "🔍 Checking running containers..."
