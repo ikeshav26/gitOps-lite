@@ -22,7 +22,7 @@ app.get("/api/", (req, res) => {
 
 app.get("/api/data", (req, res) => {
   const data = {
-    message: "Hello from the server!",
+    message: "Api is working completely fine...",
     timestamp: new Date(),
   };
   res.json(data);

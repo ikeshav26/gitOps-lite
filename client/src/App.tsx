@@ -33,7 +33,8 @@ const App = () => {
 
   return (
     <div style={{ padding: "20px", fontFamily: "system-ui" }}>
-      <h1>Testing Automations</h1>
+      <h1>Testing Automations - CI/CD Pipeline v2</h1>
+      <p style={{ fontSize: "12px", color: "#666" }}>Last deployed: {new Date().toLocaleString()}</p>
       <img src="favicon.svg" alt="Logo"/>
       <button 
         onClick={fetchData} 
