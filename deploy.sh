@@ -12,7 +12,6 @@ cd $PROJECT_DIR
 
 echo ""
 echo "📥 Pulling latest changes..."
-git 
 git stash
 git pull origin main
 git stash pop || echo "No local changes to apply"
