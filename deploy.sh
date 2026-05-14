@@ -12,7 +12,7 @@ cd $PROJECT_DIR
 
 echo ""
 echo "📥 Pulling latest changes..."
-git pull origin main
+git pull --rebase origin main
 
 echo ""
 echo "📦 Current version:"
@@ -31,7 +31,7 @@ sudo cp -r dist/* /var/www/pipeline/
 echo ""
 echo "🐳 Rebuilding Docker containers..."
 cd $PROJECT_DIR
-docker compose up -d --build
+docker-compose up -d --build
 
 echo ""
 echo "🧹 Cleaning unused Docker images..."
