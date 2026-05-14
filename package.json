@@ -1,11 +1,11 @@
 {
   "name": "host",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
     "install": "concurrently \"cd server && pnpm install\" \"cd client && pnpm install\"",
-     "dev": "concurrently \"cd server && pnpm dev\" \"cd client && pnpm dev\"",
+    "dev": "concurrently \"cd server && pnpm dev\" \"cd client && pnpm dev\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
