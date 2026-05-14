@@ -22,7 +22,7 @@ app.get("/api/", (req, res) => {
 
 app.get("/api/data", (req, res) => {
   const data = {
-    message: "Api is working completely fine... checking for CI/CD pipeline",
+    message: "Api is working completely fine... checking for CI/CD pipeline and all workflows",
     timestamp: new Date(),
   };
   res.json(data);
