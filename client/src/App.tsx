@@ -32,8 +32,8 @@ const App = () => {
   }, [])
 
   return (
-    <div style={{ padding: "20px", fontFamily: "system-ui" }}>
-      <h1>Testing Automations - CI/CD Pipeline v2</h1>
+  <div style={{ padding: "20px", fontFamily: "system-ui" ,backgroundColor: "#111111",color: "#fff", minHeight: "100vh" }}>
+      <h1>Testing Automations - CI/CD Pipeline </h1>
       <p style={{ fontSize: "12px", color: "#666" }}>Last deployed: {new Date().toLocaleString()}</p>
       <img src="favicon.svg" alt="Logo"/>
       <button 
